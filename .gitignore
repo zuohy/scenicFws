@@ -1,0 +1,9 @@
+.env
+.idea
+.vscode
+*.log
+runtime
+composer.lock
+public/upload
+/nbproject/
+/safefile/
