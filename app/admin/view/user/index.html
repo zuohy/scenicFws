@@ -71,7 +71,11 @@
                     {if auth("state") and $vo.status eq 1}
                     <a class="layui-btn layui-btn-sm layui-btn-warm" data-confirm="确定要禁用该禁用账号吗?" data-action="{:url('state')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('state')}">禁 用</a>
                     {/if}
-
+                    {if $vo.username neq 'admin' and $vo.is_scenic eq 0}
+                    <a class="layui-btn layui-btn-sm layui-btn-primary" data-confirm="确定要生成讲解员吗?" data-action="{:url('scenic')}" data-value="id#{$vo.id};scenic#0" data-csrf="{:systoken('scenic')}">讲解员</a>
+                    {elseif $vo.username neq 'admin'}
+                    <a class="layui-btn layui-btn-sm layui-btn-normal " >讲解员</a>
+                    {/if}
                 </td>
             </tr>
             {/foreach}

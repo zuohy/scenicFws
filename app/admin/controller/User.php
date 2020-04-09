@@ -160,4 +160,78 @@ class User extends Controller
         $this->_delete($this->table);
     }
 
+
+    /**
+     * 新增讲解员基础信息
+     * @auth true
+     * @throws \think\db\exception\DbException
+     */
+    public function scenic()
+    {
+        $post = $this->request->post();
+
+        //判断是否为讲解员 账号 is_scenic=1
+        //用户账号为讲解员 新增讲解员数据
+        $userId = isset($post['id']) ? $post['id'] : '';
+        $where = ['id'=>$userId];
+        $userData = $this->app->db->name($this->table)->where($where)->find();
+        if( empty($userData) ){
+            //不是用户账号 返回
+            $this->error('用户账号不存在，请稍候再试！');
+            return;
+        }
+
+        //查询讲解员信息表是否已经存在相同的username
+        $userName = isset($userData['username']) ? $userData['username'] : ''; //echo ' name=' . $userName;
+        $where = ['username'=>$userName];
+        $guideData = $this->app->db->name('ScenicGuide')->where($where)->find(); //var_dump($guideData);
+        if( !empty($guideData) ){
+            //已经存在讲解员信息
+            $this->error('讲解员已存在！');
+            return;
+        }
+
+        //新增讲解员基础信息
+        $newData = ['username' => $userName, 'nickname' => '小小'];
+        $ret = $this->app->db->name('ScenicGuide')->insert($newData);
+
+        if( $ret == '1'){
+            //更新用户表状态
+            $this->_save($this->table, ['is_scenic' => '1']);
+        }else{
+            $this->error('讲解员创建失败！');
+        }
+
+    }
+
+    /**
+     * 新增讲解员基础信息
+     * @auth true
+     * @throws \think\db\exception\DbException
+     */
+    private function createScenic($data)
+    {
+        //判断是否为讲解员 账号 is_scenic=1
+        //用户账号为讲解员 新增讲解员数据
+        $userName = isset($data['username']) ? $data['username'] : '';
+        $isScenic = isset($data['is_scenic']) ? $data['is_scenic'] : '';
+        if( empty($isScenic) ){
+            //不是讲解员账号 返回
+            return;
+        }
+
+        //查询讲解员信息表是否已经存在相同的username
+        $where = ['username'=>$userName];
+        $guideData = $this->app->db->name('ScenicGuide')->where($where)->find();
+        if( !empty($guideData) ){
+            //已经存在讲解员信息
+            return;
+        }
+
+        //新增讲解员基础信息
+        //['username' => $userName, 'nickname' => $userName, ]
+        $this->_save('ScenicGuide', $data);
+    }
+
+
 }
