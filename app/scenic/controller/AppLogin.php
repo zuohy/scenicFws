@@ -37,11 +37,9 @@ class AppLogin extends Controller
      */
     public function index()
     {
-
-        $this->redirect(url('@scenic/appguide')->build()); //todo 测试讲解员登录后首页
         if ($this->app->request->isGet()) {
             if (AdminService::instance()->isLogin()) {
-                $this->redirect(url('@appguide')->build());
+                $this->redirect(url('@scenic/appguide')->build());
             } else {
                 $this->title = '系统登录';
                 $this->captcha_type = 'login_captcha';
@@ -81,7 +79,7 @@ class AppLogin extends Controller
             ]);
             $this->app->session->set('user', $user);
             sysoplog('用户登录', "登录系统后台成功");
-            $this->success('登录成功', url('@appguide')->build());
+            $this->success('登录成功', url('@scenic/appguide')->build());
         }
     }
 
