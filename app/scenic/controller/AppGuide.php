@@ -42,7 +42,7 @@ class AppGuide extends Controller
     public function index()
     {
         $this->title = '讲解员用户管理';
-        $query = $this->_query($this->table)->like('guide_name,phone,mail');
+        /*$query = $this->_query($this->table)->like('guide_name,phone,mail');
         $query->equal('status')->dateBetween('login_at,create_at');
         // 加载对应数据列表
         $this->template = $this->request->get('type', 'index');
@@ -54,7 +54,9 @@ class AppGuide extends Controller
             $this->error("无法加载{$this->template}数据列表！");
         }
         // 列表排序并显示
-        $query->order('sort desc,id desc')->page(true, true, false, 0, $this->template);
+        $query->order('sort desc,id desc')->page(true, true, false, 0, $this->template);*/
+        $this->template = 'index';
+        $this->fetch();
     }
 
     /**

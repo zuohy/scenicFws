@@ -26,7 +26,14 @@ class Index extends Controller
 {
     public function index()
     {
-        $this->redirect(url('@admin/login'));
+        $inParam = $this->request->get();
+        $type = isset($inParam['type']) ? $inParam['type'] : '';
+        if($type == 'appGuide'){
+            $this->redirect(url('@scenic/applogin'));
+        }else{
+            $this->redirect(url('@admin/login'));
+        }
+
     }
 
     /**

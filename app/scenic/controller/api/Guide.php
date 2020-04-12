@@ -17,6 +17,7 @@ namespace app\scenic\controller\api;
 
 use think\admin\Controller;
 use app\scenic\controller\Config;
+use think\helper\Str;
 /**
  * 讲解员数据接口
  * Class ApiGuide
@@ -60,7 +61,6 @@ class Guide extends Controller
         $where = ['username'=>$userName];
         $guideData = $this->app->db->name('ScenicGuide')->where($where)->find();
 
-        var_dump($guideData);
         if ($guideData) {
             $this->success('读取数据成功！',$guideData);
         } else {
@@ -146,27 +146,125 @@ class Guide extends Controller
         $nameAry = explode(',',$userName);
 
         //评价状态 默认为空
-        $vistEstimate = isset($paramObj->estimate) ? $paramObj->estimate : '';
+        $visitEstimate = isset($paramObj->estimate) ? $paramObj->estimate : '';
         $statAry = array();
-        if( empty($vistEstimate) ){
+        if( empty($visitEstimate) ){
             foreach($this->estimateStat as $key => $value){
                 $statAry[] = $key;
             }
         }else{
             //$statAry 参数支持多个，用逗号分隔
-            $statAry = explode(',',$vistEstimate);
+            $statAry = explode(',',$visitEstimate);
         }
 
         $orderData = $this->app->db->name('ScenicEstimate')
             //->field('username,level,nickname,score,headimg,contact_phone')
             ->where('guide_id','in',$nameAry)
-            ->where('vist_estimate','in',$statAry)
+            ->where('visit_estimate','in',$statAry)
             ->select();
 
         if ( $orderData ) {
             $this->success('读取数据成功！',$orderData);
         } else {
             $this->error('没有数据！');
+        }
+    }
+
+
+
+    /**
+     * 游客预约讲解员 提交
+     */
+    public function orderSubmit()
+    {
+        $paramStr = $this->request->post('param');
+        $paramObj = json_decode($paramStr);
+
+        //讲解员ID 名称
+        $userName = isset($paramObj->username) ? $paramObj->username : '';
+
+        //游客id
+        $visitId = isset($paramObj->visitid) ? $paramObj->visitid : '';
+        if( empty($visitId) ){
+            $visitId = Str::random(3); //默认ID 随机生成
+        }
+
+        //游客姓名
+        $visitName = isset($paramObj->visitname) ? $paramObj->visitname : '';
+        if( empty($visitName) ){
+            $this->error('游客姓名为空！');
+        }
+
+        //游客人数
+        $visitNum = isset($paramObj->visitnum) ? $paramObj->visitnum : '';
+        if( empty($visitNum) ){
+            $this->error('游客人数为空！');
+        }
+        //游客到馆时间
+        $visitTime = isset($paramObj->visittime) ? $paramObj->visittime : '';
+        if( empty($visitTime) ){
+            $this->error('游客到馆时间为空！');
+        }
+
+        //游客电话
+        $visitPhone = isset($paramObj->visitphone) ? $paramObj->visitphone : '';
+        if( empty($visitPhone) ){
+            $this->error('游客联系电话为空！');
+        }
+
+
+        //预约描述 备注
+        $visitMark = isset($paramObj->mark) ? $paramObj->mark : '';
+
+        $newData = ['guide_id' => $userName,
+            'visit_id' => $visitId,
+            'visit_name' => $visitName,
+            'visit_t' => $visitTime,
+            'visit_phone' => $visitPhone,
+            'visit_num' => $visitNum,
+            'mark' => $visitMark];
+        $ret = $this->app->db->name('ScenicOrder')
+            ->insert($newData);
+
+        if ( $ret ) {
+            $this->success('提交数据成功！',$ret);
+        } else {
+            $this->error('提交数据失败！');
+        }
+    }
+
+
+    /**
+     * 游客评价讲解员 提交
+     */
+    public function visitSubmit()
+    {
+        $paramStr = $this->request->post('param');
+        $paramObj = json_decode($paramStr);
+
+        $userName = isset($paramObj->username) ? $paramObj->username : '';
+
+        //评价状态 默认为空
+        $visitEstimate = isset($paramObj->estimate) ? $paramObj->estimate : '';
+        if( empty($visitEstimate) ){
+            $visitEstimate = '2'; //一般
+        }
+
+        //评价描述 备注
+        $visitMark = isset($paramObj->mark) ? $paramObj->mark : '';
+
+        $newData = ['guide_id' => $userName,
+            'visit_id' => '11',
+            'visit_name' => '匿名',
+            'visit_estimate' => $visitEstimate,
+            'mark' => $visitMark];
+        $ret = $this->app->db->name('ScenicEstimate')
+            ->insert($newData);
+
+        if ( $ret ) {
+            $this->success('提交数据成功！',$ret);
+        } else {
+            $this->error('提交数据失败！');
         }
     }
 
