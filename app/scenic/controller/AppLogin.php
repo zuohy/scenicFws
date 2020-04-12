@@ -37,6 +37,8 @@ class AppLogin extends Controller
      */
     public function index()
     {
+
+        $this->redirect(url('@scenic/appguide')->build()); //todo 测试讲解员登录后首页
         if ($this->app->request->isGet()) {
             if (AdminService::instance()->isLogin()) {
                 $this->redirect(url('@appguide')->build());

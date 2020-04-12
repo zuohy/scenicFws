@@ -60,6 +60,26 @@ class AppGuide extends Controller
     }
 
     /**
+     * 预约提醒
+     */
+    public function reminder()
+    {
+        $this->title = '预约提醒';
+        $this->template = 'reminder';
+        $this->fetch();
+    }
+
+    /**
+     * 预约详情
+     */
+    public function details()
+    {
+        $this->title = '预约详情';
+        $this->template = 'details';
+        $this->fetch();
+    }
+
+    /**
      * 添加系统用户
      * @auth true
      * @throws \think\db\exception\DataNotFoundException

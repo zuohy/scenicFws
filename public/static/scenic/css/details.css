@@ -1,0 +1,144 @@
+.header{
+	width: 100%;
+	height: 7.08rem;
+	background: #ba1f0d url(../img/tdetails/bg1.jpg) no-repeat center 0;
+	background-size: 100% 100%;
+}
+
+.header-img{
+	width:3.066rem;
+	height:3.066rem;
+	margin: 0 auto;
+	border-radius: 100%;
+	background: ghostwhite;
+}
+.header-img img{
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+}
+.bakc{
+	width: 0.293rem;
+	height:0.533rem;
+	padding-left: 0.687rem;
+	padding-top: 0.562rem;
+}
+.bakc img{
+	width: 100%;
+	height: 100%;
+}
+
+.name{
+	padding-top: 0.4rem;
+	text-align: center;
+	font-size:0.687rem;
+	font-family:NotoSansHans;
+	font-weight:bold;
+	color:rgba(255,255,255,1);
+}
+
+
+.narrator-info{
+	width:8.8rem;
+	/* height:5.671rem; */
+	background:rgba(255,255,255,1);
+	/* background: red; */
+	/* box-shadow:-0.125rem 0.14rem 0.468rem 0px rgba(21,16,15,0.05); */
+	border-radius:0.156rem;
+	position: relative;
+	top:-1.333rem;
+	margin: 0 auto;
+}
+.input-box{
+	overflow: hidden;
+	width:7.773rem;
+	border-bottom:1px solid #F6F6F6;
+	margin: 0 auto;
+	padding-top: 0.48rem;
+	padding-bottom: 0.32rem;
+}
+.input-box .title{
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1);
+	float: left;
+}
+.input-box .info{
+	float: right;
+	font-size:0.32rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1)
+}
+.input-box input{
+	float: right;
+	text-align: right;
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	border: none;
+	outline: none;
+}
+.btn{
+	margin:0 auto;
+	width:5.12rem;
+	height:0.933rem;
+	background:rgba(255,92,92,1);
+	border-radius:0.08rem;
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(255,255,255,1);
+	text-align: center;
+	line-height:0.933rem;
+}
+.btn-box{
+	padding-top: 0.4rem;
+	padding-bottom: 0.4rem;
+}
+.title-tab{
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1);
+}
+.tag-list{
+	float: right;
+}
+.input-box i{
+	display: inline-block;
+	font-style: normal;
+	font-size:0.266rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:#C2C2C2;
+	text-align: center;
+	border:1px solid #C2C2C2;
+	border-radius:0.053rem;
+	padding:0.133rem;
+}
+.input-box i.active{
+	color:rgba(255,91,91,1);
+	border:1px solid rgba(255,91,91,1);
+}
+.comments{
+	width:7.773rem;
+	height:2.293rem;
+	background:rgba(243,243,243,1);
+	border-radius:0.08rem;
+	border: none;
+	padding: 0.266rem;
+}
+.code{
+	width:3.733rem;
+	height:3.733rem;
+}
+.code-msg{
+	font-size:0.266rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1);
+	padding-top: 0.373rem;
+	padding-bottom: 1.2rem;
+}

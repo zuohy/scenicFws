@@ -1,0 +1,187 @@
+.header-title{
+	z-index: 9;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	line-height:1.253rem;
+	text-align: center;
+	height:1.253rem;
+	background:rgba(255,255,255,1);
+	box-shadow:0px 2px 2px 0px rgba(0, 0, 0, 0.02);
+	font-size:0.48rem;
+	font-family:Adobe Heiti Std;
+	font-weight:normal;
+	color:rgba(38,38,38,1);
+}
+.header-header{
+	height:1.253rem;
+}
+.bakck{
+	width: 0.24rem;
+	height: 0.44rem;
+	position: absolute;
+	left: 0.373rem;
+	top: 0;
+	height: 100%;
+	background: url(../img/tdetails/back.png) no-repeat 0 center;
+}
+.tab-list{
+	border-top: 2px solid #ececec;
+	height: 1.066rem;
+	display: flex;
+	justify-content:space-around;
+	width: 100%;
+	z-index: 9;
+	position: fixed;
+	left: 0;
+	top:1.253rem;
+	background: #FFFFFF;
+}
+.tab-list li{
+	line-height:1.066rem;
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1)
+}
+.tab-list li.active{
+	border-bottom: 5px solid #FF5B5B;
+	color: #FF5B5B;
+}
+/* end头部返回 */
+
+.narrator-info{
+	width:9.466rem;
+	/* height:5.671rem; */
+	background:rgba(255,255,255,1);
+	/* background: red; */
+	/* box-shadow:-0.125rem 0.14rem 0.468rem 0px rgba(21,16,15,0.05); */
+	border-radius:0.156rem;
+	position: relative;
+	top:-1.333rem;
+	margin: 0 auto;
+}
+.input-box{
+	overflow: hidden;
+	width:8.626rem;
+	border-bottom:1px solid #F6F6F6;
+	margin: 0 auto;
+	padding-top: 0.48rem;
+	padding-bottom: 0.32rem;
+}
+.input-box .title{
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1);
+	float: left;
+}
+.input-box .info{
+	float: right;
+	font-size:0.32rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1)
+}
+.input-box input{
+	float: right;
+	text-align: right;
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	border: none;
+	outline: none;
+}
+.btn{
+	margin:0 auto;
+	width:5.12rem;
+	height:0.933rem;
+	background:rgba(255,92,92,1);
+	border-radius:0.08rem;
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(255,255,255,1);
+	text-align: center;
+	line-height:0.933rem;
+}
+.btn-box{
+	padding-top: 0.4rem;
+	padding-bottom: 0.4rem;
+}
+.title-tab{
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1);
+}
+.tag-list{
+	float: right;
+}
+.input-box i{
+	display: inline-block;
+	font-style: normal;
+	font-size:0.266rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:#C2C2C2;
+	text-align: center;
+	border:1px solid #C2C2C2;
+	border-radius:0.053rem;
+	padding:0.133rem;
+}
+.input-box i.active{
+	color:rgba(255,91,91,1);
+	border:1px solid rgba(255,91,91,1);
+}
+.comments{
+	width:7.773rem;
+	height:2.293rem;
+	background:rgba(243,243,243,1);
+	border-radius:0.08rem;
+	border: none;
+	padding: 0.266rem;
+}
+.code{
+	width:3.733rem;
+	height:3.733rem;
+}
+.code-msg{
+	font-size:0.266rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(64,64,64,1);
+	padding-top: 0.373rem;
+	padding-bottom: 1.2rem;
+}
+
+
+.list{
+	padding-top: 4rem;
+}
+.input-box .b1{
+	width:1.866rem;
+	height:0.826rem;
+	border:2px solid rgba(255,91,91,1);
+	border-radius:0.08rem;
+	text-align: center;
+	line-height:0.826rem;
+	font-size:0.346rem;
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(255,91,91,1);
+}
+.input-boxs .title{
+	line-height: 0.88rem;
+}
+.input-box-active .title{
+	font-family:NotoSansHans;
+	font-weight:400;
+	color:rgba(151,151,152,1);
+}
+.input-box-active .b1{
+	border:2px solid rgba(151,151,151,1);
+	border-radius:0.08rem;
+	color:rgba(151,151,152,1);
+} 
