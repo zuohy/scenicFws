@@ -49,24 +49,28 @@ class AppLogin extends Controller
                 $this->fetch();
             }
         } else {
+            //$postData = $this->app->request->post();
+            //var_dump($postData);
             $data = $this->_vali([
                 'username.require' => '登录账号不能为空!',
                 'username.min:4'   => '登录账号长度不能少于4位有效字符！',
                 'password.require' => '登录密码不能为空！',
                 'password.min:4'   => '登录密码长度不能少于4位有效字符！',
-                'verify.require'   => '图形验证码不能为空！',
-                'uniqid.require'   => '图形验证标识不能为空！',
+                //'verify.require'   => '图形验证码不能为空！',
+                //'uniqid.require'   => '图形验证标识不能为空！',
             ]);
-            if (!CaptchaService::instance()->check($data['verify'], $data['uniqid'])) {
+
+            /*if (!CaptchaService::instance()->check($data['verify'], $data['uniqid'])) {
                 $this->error('图形验证码验证失败，请重新输入!');
-            }
+            }*/
+
             // 用户信息验证
             $map = ['username' => $data['username'], 'is_deleted' => '0'];
             $user = $this->app->db->name('SystemUser')->where($map)->order('id desc')->find();
             if (empty($user)) {
                 $this->error('登录账号或密码错误，请重新输入!');
             }
-            if (md5("{$user['password']}{$data['uniqid']}") !== $data['password']) {
+            if (md5("{$data['password']}") !== $user['password']) {
                 $this->error('登录账号或密码错误，请重新输入!');
             }
             if (empty($user['status'])) {

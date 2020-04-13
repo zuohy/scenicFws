@@ -35,6 +35,7 @@
 </div>
 </body>
 
+<script src="__ROOT__/static/plugs/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     function reqLogin()
     {
@@ -43,7 +44,7 @@
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
             url: "{:url('scenic/AppLogin/index')}" ,//url
-            data: {username: 'xiaoming', password: '123456'},
+            data: {username: 'xiaoming', password: 'z123456'},
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.code == 1) {

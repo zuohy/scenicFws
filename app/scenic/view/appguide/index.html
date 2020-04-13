@@ -65,7 +65,7 @@
 	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
 	<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
-	<script src="__ROOT__/static/scenic/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__ROOT__/static/plugs/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	
 	<script type="text/javascript">
 		new Vue({
@@ -94,7 +94,7 @@
 			$.ajax({
 			  type: 'get',
 			  url: url,
-			  data:{param:{username:'xiaohua'}},
+			  data:{username:'xiaoming'},
 			  success: (res)=>{
 				vant.Toast('提示');
 				console.log(res)

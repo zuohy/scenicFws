@@ -55,6 +55,9 @@ class AppGuide extends Controller
         }
         // 列表排序并显示
         $query->order('sort desc,id desc')->page(true, true, false, 0, $this->template);*/
+
+        $userName = $this->app->session->get('user.username');
+        //echo 'username='.$userName;
         $this->template = 'index';
         $this->fetch();
     }
