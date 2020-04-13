@@ -1,3 +1,6 @@
+body{
+	background:#f0efef;
+}
 .header{
 	position: fixed;
 	left: 0;
@@ -80,6 +83,8 @@
 }
 
 .evaluation-fz{
+
+	height: 8.333rem;
 	width:9.466rem;
 	margin: 0 auto;
 	background:rgba(255,255,255,1);
@@ -102,4 +107,8 @@
 	font-weight:400;
 	color:rgba(122,122,122,1);
 	
+}
+.content{
+	padding: 0.36rem 0.266rem;
+	/* background: red; */
 }

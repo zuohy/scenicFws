@@ -68,7 +68,7 @@ class AppGuide extends Controller
         $this->template = 'reminder';
         $this->fetch();
     }
-
+	
     /**
      * 预约详情
      */
@@ -78,7 +78,14 @@ class AppGuide extends Controller
         $this->template = 'details';
         $this->fetch();
     }
-
+	
+	//评分详情----评价结构详情---二维码结果详情
+	public function detailscode(){
+		$this->title = '评分详情';
+		$this->template = 'detailscode';
+		$this->fetch();
+	}
+	
     /**
      * 添加系统用户
      * @auth true

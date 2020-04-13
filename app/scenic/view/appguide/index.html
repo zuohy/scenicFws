@@ -5,53 +5,116 @@
     <meta charset="utf-8">
     <title>首页</title>
     <link rel="stylesheet" type="text/css" href="__ROOT__/static/scenic/css/index.css"/>
+    <style type="text/css">
+    	[v-cloak] {
+    	     display: none;
+    	 }
+    </style>
 </head>
 <body>
-<div class="header">
-    <img class="header-img" src="__ROOT__/static/scenic/img/1540291002.jpg" >
-    <div class="info">
-        <h2 class="name">刘子涵</h2>
-        <p>啦啦啦啦，今天也是充满希望的一天！</p>
-    </div>
-    <div class="statistics">
-        <div>
-            <div class="t1">1004</div>
-            <div class="t2">预约完成</div>
-        </div>
-        <div>
-            <div class="t1">1004</div>
-            <div class="t2">预约未完成</div>
-        </div>
-        <div>
-            <div class="t1">1004</div>
-            <div class="t2">满意</div>
-        </div>
-        <div>
-            <div class="t1">1004</div>
-            <div class="t2">不满意</div>
-        </div>
-    </div>
+	<div class="header" id="app" v-cloak>
+		<img class="header-img" src="__ROOT__/static/scenic/img/1540291002.jpg" @click="link('detailscode')">
+		<div class="info">
+			<h2 class="name" @click="link('detailscode')">刘子涵</h2>
+			<p>啦啦啦啦，今天也是充满希望的一天！</p>
+		</div>
+		<div class="statistics">
+			<div>
+				<div class="t1">1004</div>
+				<div class="t2">预约完成</div>
+			</div>
+			<div>
+				<div class="t1">1004</div>
+				<div class="t2">预约未完成</div>
+			</div>
+			<div>
+				<div class="t1">1004</div>
+				<div class="t2">满意</div>
+			</div>
+			<div>
+				<div class="t1">1004</div>
+				<div class="t2">不满意</div>
+			</div>
+		</div>
+		
+		<div class="tab-list">
+			<div class="tab" @click="link('reminder')">
+				<img src="__ROOT__/static/scenic/img/yy.png">
+				<div class="text">预约提醒</div>
+			</div>
+			<div class="tab" @click="link('details')">
+				<img src="__ROOT__/static/scenic/img/jg.png">
+				<div class="text">评价结果</div>
+			</div>
+		</div>
 
-    <div class="tab-list">
-        <a data-action='{:url("reminder")}'>
-        <div class="tab">
-            <img src="__ROOT__/static/scenic/img/yy.png">
-            <div class="text">预约提醒</div>
-        </div>
-        </a>
-        <div class="tab">
-            <img src="__ROOT__/static/scenic/img/jg.png">
-            <div class="text">评价结果</div>
-        </div>
-    </div>
+		<div class="evaluation-fz">
+			<div class="content">
+				<h3>评价分值<div class="date">2020-04-05</div></h3>
+				<div style="height: 40px;"></div>
+				<ve-ring :data="chartData" :settings="chartSettings" :colors="color"></ve-ring>
+			</div>
+		</div>
 
-    <div class="evaluation-fz">
-        <h3>评价分值
-            <div class="date">2020-04-05</div>
-        </h3>
-    </div>
-
-</div>
-
+	</div>
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/v-charts/lib/index.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+	<script src="__ROOT__/static/scenic/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+		new Vue({
+		  el: '#app',
+		  data() {
+			 return{
+				 color:['#28C3F0','#8CAAFF','#249EFB','#33F392'],
+				 chartSettings:{
+					radius: [50, 150],
+					offsetY: 250,
+				 },
+				 chartData: {
+				   columns: ['满意度', '人数'],
+				   rows: [
+				     { '满意度': '满意-100人', '人数': 0},
+				     { '满意度': '不满意-200人', '人数': 0 },
+					 { '满意度': '一般300人', '人数': 0 },
+				     { '满意度': '非常满意400人', '人数': 0 }
+				   ]
+				 }
+			 }
+		  },
+		  created(){
+			// vant.Toast('提示');
+			let url='{:url("api.guide/get")}'
+			$.ajax({
+			  type: 'get',
+			  url: url,
+			  data:{param:{username:'xiaohua'}},
+			  success: (res)=>{
+				vant.Toast('提示');
+				console.log(res)
+			  },error:(e)=>{
+				 
+			  }
+			});
+		  },
+		  methods:{
+			  link(type){
+				if(type=='reminder'){
+					window.location.href='{:url("reminder")}';   
+				}else if(type=='detailscode'){
+					window.location.href='{:url("detailscode")}';   
+				}else if(type=='details'){
+					window.location.href='{:url("details")}';   
+				}
+			  }
+		  }
+		})
+	</script>
 </body>
 </html>
