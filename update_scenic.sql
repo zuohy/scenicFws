@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2020-04-12 11:08:26
+Date: 2020-04-14 22:00:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,12 +34,13 @@ CREATE TABLE `scenic_estimate` (
   KEY `idx_system_user_username` (`guide_id`) USING BTREE,
   KEY `idx_system_user_deleted` (`is_deleted`) USING BTREE,
   KEY `idx_system_user_status` (`visit_estimate`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=utf8mb4 COMMENT='系统-用户';
+) ENGINE=InnoDB AUTO_INCREMENT=10007 DEFAULT CHARSET=utf8mb4 COMMENT='系统-用户';
 
 -- ----------------------------
 -- Records of scenic_estimate
 -- ----------------------------
 INSERT INTO `scenic_estimate` VALUES ('10005', 'xiaoming', '11', '游客1', '0', '2', '', '0', '0', '2020-04-10 02:25:20');
+INSERT INTO `scenic_estimate` VALUES ('10006', 'xiaoming', '11', '匿名', '0', '2', 'eee', '0', '0', '2020-04-14 21:58:39');
 
 -- ----------------------------
 -- Table structure for `scenic_guide`
@@ -102,10 +103,14 @@ CREATE TABLE `scenic_order` (
   KEY `idx_system_user_username` (`guide_id`) USING BTREE,
   KEY `idx_system_user_deleted` (`is_deleted`) USING BTREE,
   KEY `idx_system_user_status` (`order_stat`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8mb4 COMMENT='系统-用户';
+) ENGINE=InnoDB AUTO_INCREMENT=10009 DEFAULT CHARSET=utf8mb4 COMMENT='系统-用户';
 
 -- ----------------------------
 -- Records of scenic_order
 -- ----------------------------
-INSERT INTO `scenic_order` VALUES ('10003', 'xiaoming', '11', '游客1', '2020-04-10 01:32:38', '1356434534', '1', '', '0', '0', '0', '0', '2020-04-10 01:32:50');
+INSERT INTO `scenic_order` VALUES ('10003', 'xiaoming', '11', '游客1', '2020-04-10 01:32:38', '1356434534', '1', '', '1', '0', '0', '0', '2020-04-10 01:32:50');
 INSERT INTO `scenic_order` VALUES ('10004', 'xiaozuo', '12', '游客2', '2020-04-11 01:33:21', '1243323223', '2', '', '0', '0', '0', '0', '2020-04-10 01:33:37');
+INSERT INTO `scenic_order` VALUES ('10005', 'xiaoming', '13', '游客3', '2020-04-14 01:06:57', '1231243433', '3', '', '1', '1', '0', '0', '2020-04-14 01:06:51');
+INSERT INTO `scenic_order` VALUES ('10006', 'xiaoming', '14', '游客4', '2020-04-16 01:15:35', '34323423423', '5', '', '2', '1', '0', '0', '2020-04-14 01:15:28');
+INSERT INTO `scenic_order` VALUES ('10007', 'xiaoming', '15', '游客5', '2020-04-07 01:18:11', '143423423423', '1', '', '3', '1', '0', '0', '2020-04-14 01:18:05');
+INSERT INTO `scenic_order` VALUES ('10008', 'xiaoming', 'DCG', 'qq', '2020-04-15 00:00:00', '13817263212', '2', 'fff', '1', '1', '0', '0', '2020-04-14 21:47:22');
