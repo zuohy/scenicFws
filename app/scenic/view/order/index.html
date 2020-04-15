@@ -3,16 +3,16 @@
 {block name="button"}
 
 {if auth("state")}
-<a data-confirm="确定要启用该用户吗？" data-action="{:url('state')}" data-rule="id#{key};status#0" data-csrf="{:systoken('state')}" class='layui-btn layui-btn-sm layui-btn-primary'>批量禁用</a>
+<a data-confirm="确定要确认该预约吗？" data-action="{:url('state')}" data-rule="id#{key};status#2" data-csrf="{:systoken('state')}" class='layui-btn layui-btn-sm layui-btn-primary'>批量确认</a>
 {/if}
 
 {/block}
 
 {block name="content"}
 <div class="layui-tab layui-tab-card think-bg-white">
-    {include file='guide/index_tab'}
+    {include file='order/index_tab'}
     <div class="layui-tab-content think-box-shadow">
-        {include file='guide/index_search'}
+        {include file='order/index_search'}
         <table class="layui-table margin-top-10" lay-skin="line">
             {notempty name='list'}
             <thead>
@@ -23,8 +23,9 @@
                 <th class='list-table-sort-td'>
                     <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
                 </th>
-                <th class='text-left nowrap' width="25%">账号信息</th>
-                <th class='text-left nowrap'>账号状态</th>
+                <th class='text-left nowrap' width="25%">预约信息</th>
+                <th class='text-left nowrap' width="25%">讲解员</th>
+                <th class='text-left nowrap'>预约状态</th>
                 <th></th>
             </tr>
             </thead>
@@ -41,13 +42,17 @@
                 <td class='text-left nowrap'>
                     <img alt="img" width="40px" height="40px" class="text-top margin-right-10" data-tips-image src="{$vo.headimg|default=''}">
                     <div class="inline-block sub-span-blue">
-                        用户账号 <span><b>{$vo.username|default=''}</b></span> 用户昵称 <span><b>{$vo.nickname|default='-'|raw}</b></span><br>
-                        联系手机 <span>{$vo.contact_phone|default='<i class="color-desc">未配置</i>'|raw}</span>，
-                        联系邮箱 <span>{$vo.contact_mail|default='<i class="color-desc">未配置</i>'|raw}</span>
+                        游客ID <span><b>{$vo.visit_id|default=''}</b></span> 游客姓名 <span><b>{$vo.visit_name|default='-'|raw}</b></span><br>
+                        联系手机 <span>{$vo.visit_phone|default='<i class="color-desc">未配置</i>'|raw}</span>，
+                        到访人数 <span>{$vo.visit_num|default='<i class="color-desc">未配置</i>'|raw}</span>，
+                        到访时间 <span>{$vo.visit_t|default='<i class="color-desc">未配置</i>'|raw}</span>，
                     </div>
                 </td>
                 <td class='text-left nowrap sub-span-blue'>
-                    {eq name='vo.status' value='0'}<b class="color-red">已禁用</b>{else}<b class="color-green">使用中</b>{/eq}
+                    {eq name='vo.guide_id' value=''}<b class="color-red">未知</b>{else}<b class="color-green">{$vo.guide_id}</b>{/eq}
+                </td>
+                <td class='text-left nowrap sub-span-blue'>
+                    {eq name='vo.order_stat' value='1'}<b class="color-red">未确认</b>{else}<b class="color-green">使用中</b>{/eq}
                 </td>
                 <td class='text-left nowrap'>
 
@@ -55,7 +60,7 @@
                     <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑资料" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
                     {/if}
 
-                    {if auth("state") and $vo.status eq 1}
+                    {if auth("state") and $vo.order_stat eq 1}
                     <a class="layui-btn layui-btn-sm layui-btn-warm" data-confirm="确定要禁用该禁用账号吗?" data-action="{:url('state')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('state')}">禁 用</a>
                     {/if}
 
