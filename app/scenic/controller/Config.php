@@ -20,7 +20,7 @@ use think\admin\Controller;
 /**
  * 系统参数配置
  * Class Config
- * @package app\admin\controller
+ * @package app\scenic\controller
  */
 class Config extends Controller
 {
@@ -68,7 +68,7 @@ class Config extends Controller
 
 
     /**
-     * 系统参数配置
+     * 评价系统配置
      * @auth true
      * @menu true
      */

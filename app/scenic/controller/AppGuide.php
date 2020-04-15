@@ -19,10 +19,10 @@ use think\admin\Controller;
 
 /**
  * 讲解员用户手机端
- * Class AppGuide
+ * Class Appguide
  * @package app\scenic\controller
  */
-class AppGuide extends Controller
+class Appguide extends Controller
 {
 
     /**
@@ -32,8 +32,8 @@ class AppGuide extends Controller
     public $table = 'ScenicGuide';
 
     /**
-     * 系统用户管理
-     * @auth true
+     * 讲解员用户主页
+     * @auth false
      * @menu true
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -64,7 +64,12 @@ class AppGuide extends Controller
     }
 
     /**
-     * 预约提醒
+     * 讲解员预约提醒
+     * @auth false
+     * @login false
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function reminder()
     {
@@ -75,9 +80,13 @@ class AppGuide extends Controller
         $this->assign('username',$userName);
         $this->fetch();
     }
-	
+
     /**
-     * 预约详情
+     * 讲解员预约详情
+     * @auth false
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function details()
     {
@@ -87,9 +96,17 @@ class AppGuide extends Controller
         $this->assign('username',$userName);
         $this->fetch();
     }
-	
-	//评分详情----评价结构详情---二维码结果详情
+
+    /**
+     * 评分详情
+     * @auth false
+     * @login false
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
 	public function detailscode(){
+        $userName = $this->app->session->get('user.username');
 		$this->title = '评分详情';
 		$this->template = 'detailscode';
         $this->assign('username',$userName);
@@ -103,11 +120,11 @@ class AppGuide extends Controller
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function add()
+    /*public function add()
     {
         $this->_applyFormToken();
         $this->_form($this->table, 'form');
-    }
+    }*/
 
     /**
      * 编辑系统用户
@@ -116,11 +133,11 @@ class AppGuide extends Controller
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function edit()
+    /*public function edit()
     {
         $this->_applyFormToken();
         $this->_form($this->table, 'form');
-    }
+    }*/
 
     /**
      * 修改用户密码
@@ -129,7 +146,7 @@ class AppGuide extends Controller
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function pass()
+    /*public function pass()
     {
         $this->_applyFormToken();
         if ($this->request->isGet()) {
@@ -146,7 +163,7 @@ class AppGuide extends Controller
                 $this->error('密码修改失败，请稍候再试！');
             }
         }
-    }
+    }*/
 
     /**
      * 表单数据处理
@@ -155,7 +172,7 @@ class AppGuide extends Controller
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    protected function _form_filter(&$data)
+    /*protected function _form_filter(&$data)
     {
         if ($this->request->isPost()) {
             // 用户权限处理
@@ -169,33 +186,33 @@ class AppGuide extends Controller
             $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
             $this->authorizes = $this->app->db->name('SystemAuth')->where(['status' => '1'])->order('sort desc,id desc')->select();
         }
-    }
+    }*/
     /**
      * 修改用户状态
      * @auth true
      * @throws \think\db\exception\DbException
      */
-    public function state()
+    /*public function state()
     {
         if (in_array('10000', explode(',', $this->request->post('id')))) {
             $this->error('系统超级账号禁止操作！');
         }
         $this->_applyFormToken();
         $this->_save($this->table, ['status' => intval(input('status'))]);
-    }
+    }*/
 
     /**
      * 删除系统用户
      * @auth true
      * @throws \think\db\exception\DbException
      */
-    public function remove()
+    /*public function remove()
     {
         if (in_array('10000', explode(',', $this->request->post('id')))) {
             $this->error('系统超级账号禁止删除！');
         }
         $this->_applyFormToken();
         $this->_delete($this->table);
-    }
+    }*/
 
 }

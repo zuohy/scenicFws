@@ -19,7 +19,7 @@ use think\admin\Controller;
 
 /**
  * 讲解员评价管理
- * Class User
+ * Class Estimate
  * @package app\admin\controller
  */
 class Estimate extends Controller

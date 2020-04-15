@@ -23,10 +23,10 @@ use think\admin\service\SystemService;
 
 /**
  * 用户登录管理
- * Class Login
+ * Class Applogin
  * @package app\admin\controller
  */
-class AppLogin extends Controller
+class Applogin extends Controller
 {
 
     /**

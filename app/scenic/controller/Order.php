@@ -18,8 +18,8 @@ namespace app\scenic\controller;
 use think\admin\Controller;
 
 /**
- * 预约管理
- * Class User
+ * 讲解员预约管理
+ * Class Order
  * @package app\admin\controller
  */
 class Order extends Controller
