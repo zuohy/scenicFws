@@ -13,14 +13,14 @@
     padding-top: 2.125rem;
 }
 .info h2{
-    font-size:0.718rem;
+    font-size:0.613rem;
     font-family:NotoSansHans;
     font-weight:400;
     color:rgba(255,255,255,1);
     text-align: center;
 }
 .info p{
-    font-size:0.531rem;
+    font-size:0.453rem;
     font-family:NotoSansHans;
     font-weight:400;
     color:rgba(255,255,255,1);
@@ -49,10 +49,19 @@
     background: url(../img/login/mi.png) no-repeat center center;
     background-size: 0.625rem 0.531rem;
 }
+.input i.active{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width:0.625rem;
+    height: 100%;
+    background: url(../img/login/mi1.png) no-repeat center center;
+    background-size: 0.625rem 0.531rem;
+}
 .input input{
     background:rgba(0,0,0,0);
     width: 70%;
-    font-size:0.593rem;
+    font-size:0.506rem;
     font-family:Adobe Heiti Std;
     font-weight:normal;
     border: none;

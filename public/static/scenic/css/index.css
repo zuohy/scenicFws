@@ -96,10 +96,15 @@ body{
 	font-family:NotoSansHans;
 	font-weight:400;
 	color:rgba(67,67,67,1);
+	position: relative;
+	width: 100%;
 }
-.evaluation-fz h3 .date{
+
+.evaluation-fz h3 .date-box{
+	position: absolute;
+	right: 0;
+	top: 0;
 	padding-left: 0.6rem;
-	float: right;
 	background: url(../img/date.png) no-repeat 0 center;
 	background-size: 0.333rem 0.32rem;
 	font-size:0.253rem;

@@ -8,20 +8,21 @@
 </head>
 <body>
 <div class="bg">
-    <div class="login-info">
+    <div class="login-info" id="app">
         <div class="info">
             <h2>欢迎登录翁安猴场会议景区</h2>
             <p>讲解员评价系统</p>
         </div>
         <div class="form">
             <div class="input">
-                <input type="text" placeholder="请输入账号" />
+                <input type="text" placeholder="请输入账号" v-model="username" maxlength="18" />
             </div>
             <div class="input">
-                <input type="password" placeholder="请输入密码" />
-                <i class="icon"></i>
+                <input v-if='iputshow' type="password" placeholder="请输入密码" v-model="password" maxlength="18" />
+				<input v-else='!iputshow' type="text" placeholder="请输入密码" v-model="password" maxlength="18"  />
+                <i class="icon" v-bind:class="{'active':iputshow}" @click="setIputShow"></i>
             </div>
-            <div class="button" onclick="reqLogin()">
+            <div class="button" @click="login">
                 登录
             </div>
         </div>
@@ -36,29 +37,56 @@
 </body>
 
 <script src="__ROOT__/static/plugs/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" charset="utf-8">
-    function reqLogin()
-    {
-        $.ajax({
-            //几个参数需要注意一下
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: "{:url('scenic/AppLogin/index')}" ,//url
-            data: {username: 'xiaoming', password: 'z123456'},
-            success: function (result) {
-                console.log(result);//打印服务端返回的数据(调试用)
-                if (result.code == 1) {
-                    alert("成功！");
-                    window.history.back(-1);
-                }else{
-                    alert("失败！");
-                }
-            },
-            error : function() {
-                alert("异常！");
-            }
-        });
 
-    }
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+<script src="__ROOT__/static/scenic/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script>
+	
+	new Vue({
+		el: '#app',
+		data(){
+			return{
+			  iputshow:true,
+			  password:"",
+			  username:''
+			}
+		},
+		methods:{
+			setIputShow(){
+				this.iputshow=!this.iputshow;
+			},
+			//{username: 'xiaoming', password: 'z123456'},
+			login(){
+				let url='{:url("scenic/AppLogin/index")}';
+				const toast = vant.Toast.loading({
+				  duration: 0, // 持续展示 toast
+				  forbidClick: true,
+				  message: '登录中...',
+				});
+				$.ajax({
+				  type: 'POST',
+				  url: url,
+				  data:{username: this.username, password:this.password},
+				  success: (res)=>{
+					//返回数据
+					toast.clear();
+					if(res.code=='1'){
+						//vant.Toast('登录成功');
+						location.reload();
+					}else{
+						vant.Toast(res.info);
+					}
+				  },error:(e)=>{
+					vant.Toast('网络发生错误！');
+				  }
+				});
+			}
+		}
+	});
+	
 </script>
 </html>

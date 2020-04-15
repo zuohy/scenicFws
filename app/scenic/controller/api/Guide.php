@@ -118,7 +118,6 @@ class Guide extends Controller
         $userName = isset($paramAry['username']) ? $paramAry['username'] : '';
         //username 参数支持多个，用逗号分隔
         $nameAry = explode(',',$userName);
-
         //预约状态 默认为空
         $orderStat = isset($paramAry['stat']) ? $paramAry['stat'] : '';
         $statAry = array();
@@ -131,6 +130,7 @@ class Guide extends Controller
             $statAry = explode(',',$orderStat);
         }
 
+       // dump($paramAry);
         $orderData = $this->app->db->name('ScenicOrder')
             //->field('username,level,nickname,score,headimg,contact_phone')
             ->where('guide_id','in',$nameAry)
@@ -212,7 +212,7 @@ class Guide extends Controller
         if($userName == ''){
             //查询 所有讲解员的 预约状态分析
             $orderData = $this->app->db->name('ScenicOrder')
-                ->field('username,order_stat,COUNT(order_stat) as count')
+                ->field('order_stat,COUNT(order_stat) as count')
                 ->where('create_at','<=',$alysTime)
                 ->group('order_stat')
                 ->select()
@@ -226,7 +226,7 @@ class Guide extends Controller
         }else{
             //查询 指定讲解员的 预约状态分析
             $orderData = $this->app->db->name('ScenicOrder')
-                ->field('username,order_stat,COUNT(order_stat) as count')
+                ->field('order_stat,COUNT(order_stat) as count')
                 ->where('guide_id','in',$nameAry)
                 ->where('create_at','<=',$alysTime)
                 ->group('order_stat')
@@ -280,7 +280,7 @@ class Guide extends Controller
         if($userName == ''){
             //查询 所有讲解员的 评价状态分析
             $orderData = $this->app->db->name('ScenicEstimate')
-                ->field('username,visit_estimate,COUNT(visit_estimate) as count')
+                ->field('visit_estimate,COUNT(visit_estimate) as count')
                 ->where('create_at','<=',$alysTime)
                 ->group('visit_estimate')
                 ->select()
@@ -293,7 +293,7 @@ class Guide extends Controller
         }else{
             //查询 指定讲解员的 评价状态分析
             $orderData = $this->app->db->name('ScenicEstimate')
-                ->field('username,visit_estimate,COUNT(visit_estimate) as count')
+                ->field('visit_estimate,COUNT(visit_estimate) as count')
                 ->where('guide_id','in',$nameAry)
                 ->where('create_at','<=',$alysTime)
                 ->group('visit_estimate')

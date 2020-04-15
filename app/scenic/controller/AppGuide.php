@@ -57,6 +57,7 @@ class AppGuide extends Controller
         $query->order('sort desc,id desc')->page(true, true, false, 0, $this->template);*/
 
         $userName = $this->app->session->get('user.username');
+        $this->assign('username',$userName);
         //echo 'username='.$userName;
         $this->template = 'index';
         $this->fetch();
@@ -67,8 +68,11 @@ class AppGuide extends Controller
      */
     public function reminder()
     {
+        $userName = $this->app->session->get('user.username');
+        //exit($userName);
         $this->title = '预约提醒';
         $this->template = 'reminder';
+        $this->assign('username',$userName);
         $this->fetch();
     }
 	
@@ -77,8 +81,10 @@ class AppGuide extends Controller
      */
     public function details()
     {
+        $userName = $this->app->session->get('user.username');
         $this->title = '预约详情';
         $this->template = 'details';
+        $this->assign('username',$userName);
         $this->fetch();
     }
 	
@@ -86,6 +92,7 @@ class AppGuide extends Controller
 	public function detailscode(){
 		$this->title = '评分详情';
 		$this->template = 'detailscode';
+        $this->assign('username',$userName);
 		$this->fetch();
 	}
 	
@@ -163,7 +170,6 @@ class AppGuide extends Controller
             $this->authorizes = $this->app->db->name('SystemAuth')->where(['status' => '1'])->order('sort desc,id desc')->select();
         }
     }
-
     /**
      * 修改用户状态
      * @auth true

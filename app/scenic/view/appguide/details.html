@@ -15,8 +15,8 @@
 	<body>
 		<div id="app">
 		<div class="header-title">
-			<i class="bakck"></i>
-			评价详情
+			<i class="bakck" @click="back"></i>
+			评价列表
 		</div>
 		<div class="header-header"></div>
 		<ul class="narrator-list">
@@ -27,30 +27,31 @@
 					</h2>
 					<div class="tab-list">
 						<span  @click="tab('0')" v-bind:class="{'active':tabindex=='0'}">全部 {{count.fine}}</span>
-						<span @click="tab('1')" v-bind:class="{'active':tabindex=='1'}">非常满意 {{count.fine}}</span>
-						<span @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">满意 {{count.satisfy}}</span>
-						<span @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">一般 {{count.kind}}</span>
-						<span @click="tab('4')" v-bind:class="{'active':tabindex=='4'}">不满意 {{count.poor}}</span>
+						<span @click="tab('1')" v-bind:class="{'active':tabindex=='1'}">不满意 {{count.fine}}</span>
+						<span @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">一般 {{count.satisfy}}</span>
+						<span @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">满意 {{count.kind}}</span>
+						<span @click="tab('4')" v-bind:class="{'active':tabindex=='4'}">非常满意 {{count.poor}}</span>
 					</div>
-					<div class="button" style="top:2.666rem;">{{item.state|stateText}} {{item.num}}</div>
+					<div class="button" style="top:2.666rem;">{{item.visit_estimate|stateText}}</div>
 				</div>
-				<div v-else class="button">{{item.state|stateText}} {{item.num}}</div>
+				<div v-else class="button">{{item.visit_estimate|stateText}}</div>
 				
 				<div class="info">
 					<img :src="item.headerimg" >
 					<div class="info-name">
-						<p>{{item.name}}</p>
-						<span>{{item.date}}</span>
+						<p>{{item.visit_name}}</p>
+						<span>{{item.create_at}}</span>
 					</div>
 				</div>
 				<p class="text">
-					大家好!欢迎光临我们的瓮安会议会址，乃至旅游届最富有才华 英明神武 智慧于美貌并重，英雄与侠义化身 人见人爱 
+					{{item.mark}}
 				</p>
 			</li>
 		</ul>
 		
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
 		<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
 		<script src="__ROOT__/static/scenic/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script>
@@ -75,20 +76,24 @@
 				},
 				filters:{
 					stateText(state){
-						//1非常满意，2满意，3一般，4不满意
+						//console.log(state)
+						// '1' => '不满意',
+						// '2' => '一般',
+						// '3' => '满意',
+						// '4' => '非常满意',
 						let text='';
 						switch(state) {
-						     case '1':
-						       text='非常满意';
+						     case 1:
+						       text='不满意';
 						       break;
-						     case '2':
-						       text='满意';
+						     case 2:
+						       text='一般';
 						        break;
-							case '3':
-							   text='一般';
+							case 3:
+							   text='满意';
 							   break;
-							case '4':
-							   text='不满意';
+							case 4:
+							   text='非常满意';
 							   break;
 						} 
 						return text;
@@ -96,67 +101,44 @@
 					
 				},
 				methods:{
+					back(){
+						window.history.go(-1);
+					},
 					//切换tab
 					tab(index){
 						this.tabindex=index;
-						//this.getData(index);
+						this.getData(index);
 					},
 					//获取数据
 					getData(tabindex){ //tabindex挡墙状态
 						//获取数据
-						let url='{:url("api.guide/get")}'
+						let url='{:url("api.guide/estimate")}'
+						const toast = vant.Toast.loading({
+						  duration: 0, // 持续展示 toast
+						  forbidClick: true,
+						  message: '加载中...',
+						});
 						$.ajax({
 						  type: 'get',
 						  url: url,
-						  data:{statue:tabindex},
+						  data:{estimate:tabindex,username:'{$username}'},
 						  success: (res)=>{
 							//返回数据
-							console.log(res)
-							//模拟数据格式
-							let data=[{
-								id:1,//(必须)
-								headerimg:'https://www.baidu.com/img/bd_logo1.png',//t头像
-								name:"张三1",//预约人
-								date:"10月05",    //到访时间
-								num:"111",//评价人数（状态唯一）
-								state:"1",//1非常满意，2满意，3一般，4不满意
-								mark:'大家好!欢迎光临我们的瓮安会议会址，乃至旅游届最富有才华 英明神武 智慧于美貌并重，英雄与侠义化身 人见人爱 ',
-							},{
-								id:2,
-								headerimg:'https://www.baidu.com/img/bd_logo1.png',//t头像
-								name:"张三2",//预约人
-								date:"10月05",    //到访时间
-								num:"1222",//评价人数（状态唯一）
-								state:"2",//1非常满意，2满意，3一般，4不满意
-								mark:'大家好!欢迎光临我们的瓮安会议会址，乃至旅游届最富有才华 英明神武 智慧于美貌并重，英雄与侠义化身 人见人爱 ' 
-							},{
-								id:3,
-								headerimg:'https://www.baidu.com/img/bd_logo1.png',//t头像
-								name:"张三3",//预约人
-								date:"10月05",    //到访时间
-								num:"10",//评价人数（状态唯一）
-								state:"3",//1非常满意，2满意，3一般，4不满意
-								mark:'大家好!欢迎光临我们的瓮安会议会址，乃至旅游届最富有才华 英明神武 智慧于美貌并重，英雄与侠义化身 人见人爱 ' 
-							},{
-								id:4,
-								headerimg:'https://www.baidu.com/img/bd_logo1.png',//t头像
-								name:"张三4",//预约人
-								date:"10月05",    //到访时间
-								num:"11",//评价人数（状态唯一）
-								state:"4",//状态0全部，1非常满意，2满意，3一般，4不满意
-								mark:'大家好!欢迎光临我们的瓮安会议会址，乃至旅游届最富有才华 英明神武 智慧于美貌并重，英雄与侠义化身 人见人爱 ' 
-							}];
-							this.datalist=data;
-							//获取总数
-							this.count={
-								fine:'111', //非常满意总数
-								satisfy:'1222',//满意
-								kind:'10',//一般
-								poor:'11' //差
+							//console.log(res);
+							if(res.code=='1'){
+								this.datalist=res.data;
+								//获取总数
+								this.count={
+									fine:'111', //非常满意总数
+									satisfy:'1222',//满意
+									kind:'10',//一般
+									poor:'11' //差
+								}
 							}
-						
+							//模拟数据格式
+							toast.clear();
 						  },error:(e)=>{
-							 alert('发生错误');
+							 vant.Toast('网络发生错误');
 						  }
 						});
 					}
