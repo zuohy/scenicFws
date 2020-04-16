@@ -1,0 +1,82 @@
+<script src="__ROOT__/static/scenic/js/flexible.js" type="text/javascript" charset="utf-8"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>游客-讲解员列表</title>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/scenic/css/narrator.css"/>
+	<style type="text/css">
+		[v-cloak] {
+		     display: none;
+		 }
+	</style>
+</head>
+<body>
+	<div class="banner">
+		<img src="__ROOT__/static/scenic/img/list/banner@2x.png" >
+	</div>
+	<ul class="narrator-list" id="app" v-cloak>
+		<li v-for="item in datalist" :key="item.id">
+			<div class="button" @click="booking(item.username)">立即预约</div>
+			<div class="info">
+				<img :src="item.headimg" >
+				<div class="info-name">
+					<p>{{item.nickname}}</p>
+					<span>优秀讲解员</span>
+				</div>
+			</div>
+			<p class="dec">服务人数<span class="t1">2000</span> 满意度<span class="t2"> 97.89%</span></p>
+			<p class="text">
+				{{item.describe}}
+			</p>
+		</li>
+	</ul>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+	<script src="__ROOT__/static/scenic/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data(){
+				return{
+					datalist:[]
+				}
+			},
+			created(){
+				this.getData();
+			},
+			methods:{
+				//去预约
+				booking(username){
+					window.location.href='{:url("order")}?username='+username;  
+				},
+				getData(){
+					let url='{:url("api.guide/lists")}';
+					const toast = vant.Toast.loading({
+					  duration: 0, // 持续展示 toast
+					  forbidClick: true,
+					  message: '加载中...',
+					});
+					
+					$.ajax({
+					  type: 'get',
+					  url: url,
+					  success: (res)=>{
+						//返回数据
+						//console.log(res.data)
+						if(res.code=='1'){
+							this.datalist=res.data;
+						}
+						toast.clear();
+					  },error:(e)=>{
+						vant.Toast('网络发生错误');
+					  }
+					});
+				}
+			}
+		})
+	</script>
+</body>
+</html>

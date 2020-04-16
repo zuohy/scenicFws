@@ -1,0 +1,201 @@
+<script src="__ROOT__/static/scenic/js/flexible.js" type="text/javascript" charset="utf-8"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>游客-预约详情</title>
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/scenic/css/details.css"/>
+	<style type="text/css">
+		[v-cloak] {
+		     display: none;
+		 }
+	</style>
+</head>
+<body style="background:#f1f1f1;">
+	<div id="app" v-cloak>
+		<div class="header">
+			<div class="bakc" @click="back">
+				<img src="__ROOT__/static/scenic/img/tdetails/back1.png" >
+			</div>
+			<div class="header-img">
+				<img :src="datalist.headimg" >
+			</div>
+			<p class="name">{{datalist.nickname}}</p>
+		</div>
+
+		<div class="narrator-info" style="margin-bottom:0.4rem;">
+			<div class="input-box">
+				<span class="title">评价</span>
+				<strong class="info">{{datalist.level}}</strong>
+			</div>
+			<div class="input-box">
+				<span class="title">评分</span>
+				<strong class="info">{{datalist.score}}</strong>
+			</div>
+			<div class="input-box">
+				<span class="title">上班时间</span>
+				<strong class="info">{{datalist.mon_s_t}}至{{datalist.mon_e_t}}</strong>
+			</div>
+			<div class="input-box" style="border-bottom: none;">
+				<span class="title">简介</span>
+				<strong class="info" style="text-align: left;width: 6.4rem;">{{datalist.describe}}</strong>
+			</div>
+		</div>
+
+		<div class="narrator-info">
+			<div class="input-box">
+				<span class="title title-tab">选择评价结果</span>
+				<div class="tag-list">
+					<i v-bind:class="{'active':postData.estimate=='4'}" @click="tab('4')">非常满意</i>
+					<i v-bind:class="{'active':postData.estimate=='3'}" @click="tab('3')">满意</i>
+					<i v-bind:class="{'active':postData.estimate=='2'}" @click="tab('2')">一般</i>
+					<i v-bind:class="{'active':postData.estimate=='1'}" @click="tab('1')">不满意</i>
+				</div>
+			</div>
+			<div class="input-box" style="border: none;">
+				<span class="title title-tab" style="margin-bottom: 0.226rem;">评语</span>
+				<textarea class="comments" placeholder="请输入评价内容" maxlength="80" v-model="postData.mark"></textarea>
+			</div>
+			<div class="btn-box">
+				<div class="btn" @click="submit">提交评价</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+	<script src="__ROOT__/static/scenic/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data(){
+				return{
+					currentDate: new Date(),
+					show:false,
+					datalist:[],
+					postData:{
+						username:"",
+						estimate:"4",
+						mark:""
+					}
+				}
+			},
+			created(){
+				//获取讲解员信息
+				let username=this.getUrlParame('username');
+				if(username){
+					this.postData.username=username;
+					this.getData(username);
+				}else{
+					vant.Toast('网络发生错误');
+				}
+			},
+			methods:{
+				//选择满意
+				tab(index){
+					this.postData.estimate=index;
+				},
+				submit(){
+					let url='{:url("api.guide/visitSubmit")}';
+					const toast = vant.Toast.loading({
+					  duration: 0, // 持续展示 toast
+					  forbidClick: true,
+					  message: '提交中...',
+					});
+					
+					$.ajax({
+					  type: 'post',
+					  url: url,
+					  data:this.postData,
+					  success: (res)=>{
+						//返回数据
+						toast.clear();
+						if(res.code=='1'){
+							vant.Toast(res.info);
+							setTimeout(()=>{
+								window.location.href='{:url("guidelist")}';
+							},2000)
+						}else{
+							vant.Toast(res.info);
+						}
+					
+					  },error:(e)=>{
+						vant.Toast('网络发生错误');
+					  }
+					});
+				},
+				//选择时间
+				dateSelect(){
+					 this.show=true;
+				},
+				//选择时间
+				dateConfirm(val){
+					let year = val.getFullYear()
+					let month = val.getMonth() + 1
+					let day = val.getDate()
+					let hour = val.getHours()
+					let minute = val.getMinutes()
+					if (month >= 1 && month <= 9) { month = `0${month}` }
+					if (day >= 1 && day <= 9) { day = `0${day}` }
+					if (hour >= 0 && hour <= 9) { hour = `0${hour}` }
+					if (minute >= 0 && minute <= 9) { minute = `0${minute}` }
+					this.postData.visittime= `${year}-${month}-${day} ${hour}:${minute}`;
+					this.visittime=`${year}-${month}-${day} ${hour}:${minute}`;
+					this.dateCancel();
+				},
+				dateCancel(){
+					this.show=false;
+				},
+				getData(username){
+					let url='{:url("api.guide/get")}';
+					const toast = vant.Toast.loading({
+					  duration: 0, // 持续展示 toast
+					  forbidClick: true,
+					  message: '加载中...',
+					});
+					
+					$.ajax({
+					  type: 'get',
+					  url: url,
+					  data:{username:username},
+					  success: (res)=>{
+						//返回数据
+						//console.log(res.data)
+						if(res.code=='1'){
+							this.datalist=res.data;
+						}
+						toast.clear();
+					  },error:(e)=>{
+						vant.Toast('网络发生错误');
+					  }
+					});
+				},
+				back(){
+					window.location.href='{:url("guidelist")}';
+				},
+				getUrlParame(parameName){
+					var url = document.location.toString();
+					var arrObj = url.split("?");
+					if (arrObj.length > 1) {
+					 var arrPara = arrObj[1].split("&");
+					var arr;
+					 for (var i = 0; i < arrPara.length; i++) {
+			　　　　　　　　arr = arrPara[i].split("=");
+			　　　　　　　　if (arr != null && arr[0] == parameName) {
+			　　　　　　　　　　return arr[1];
+			　　　　　　　　}
+			　　　　　　}
+						return "";
+					 }else{
+						return '';
+					}
+					
+				}
+			}
+		})
+	</script>
+	
+</body>
+</html>
