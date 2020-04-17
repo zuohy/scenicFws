@@ -3,32 +3,33 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>游客-预约详情</title>
+		<title>讲解员详情</title>
 		<link rel="stylesheet" type="text/css" href="__ROOT__/static/scenic/css/details.css"/>
 	</head>
 	<body style="background:#f1f1f1;">
 		<div class="header">
 			<div class="bakc">
+                <i class="bakck" @click="back"></i>
 				<img src="__ROOT__/static/scenic/img/tdetails/back1.png" >
 			</div>
 			<div class="header-img">
-				<img src="__ROOT__/static/scenic/img/login/bg.png" >
+				<img src="{$headimg}" >
 			</div>
-			<p class="name">刘子涵</p>
+			<p class="name">{$nickname}</p>
 		</div>
 		
 		<div class="narrator-info" style="margin-bottom:0.4rem;">
+			<div class="input-box">
+				<span class="title">说明</span>
+				<strong class="info">{$describe}</strong>
+			</div>
 			<div class="input-box">
 				<span class="title">评价</span>
 				<strong class="info">优秀讲解员</strong>
 			</div>
 			<div class="input-box">
-				<span class="title">评分</span>
-				<strong class="info">优秀讲解员</strong>
-			</div>
-			<div class="input-box">
 				<span class="title">上班时间</span>
-				<strong class="info">优秀讲解员</strong>
+				<strong class="info">09:00 - 17:00</strong>
 			</div>
 			<div class="input-box" style="border-bottom: none; text-align: center;">
 				<img class="code" src="__ROOT__/static/scenic/img/code.png" >

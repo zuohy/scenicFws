@@ -7,10 +7,12 @@
 
 .header-img{
 	width:3.066rem;
-	height:3.066rem;
+	height:4.066rem;
 	margin: 0 auto;
 	/*border-radius: 100%;*/
 	background: ghostwhite;
+    margin-top: -20px;
+
 }
 .header-img img{
 	width: 100%;
@@ -29,7 +31,7 @@
 }
 
 .name{
-	padding-top: 0.4rem;
+	padding-top: 0.1rem;
 	text-align: center;
 	font-size:0.687rem;
 	font-family:NotoSansHans;

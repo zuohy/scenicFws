@@ -23,27 +23,27 @@
 <body>
 	<div class="header" id="app" v-cloak>
 		
-		<img class="header-img" src="__ROOT__/static/scenic/img/1540291002.jpg" @click="link('detailscode')">
+		<img class="header-img" src="{$user.headimg}" @click="link('detailscode')">
 		<div class="info">
-			<h2 class="name" @click="link('detailscode')">{$username}</h2>
-			<p>暂无详细介绍</p>
+			<h2 class="name" @click="link('detailscode')">{$nickname}</h2>
+			<p>{$user.describe}</p>
 		</div>
 		<div class="statistics">
 			<div>
-				<div class="t1">1</div>
+				<div class="t1" id="yes">0</div>
 				<div class="t2">预约完成</div>
 			</div>
 			<div>
-				<div class="t1">2</div>
+				<div class="t1" id="run">0</div>
 				<div class="t2">预约未完成</div>
 			</div>
 			<div>
-				<div class="t1">3</div>
-				<div class="t2">满意</div>
+				<div class="t1" id="out">0</div>
+				<div class="t2">预约过期</div>
 			</div>
 			<div>
-				<div class="t1">4</div>
-				<div class="t2">不满意</div>
+				<div class="t1" id="cos">0</div>
+				<div class="t2">预约取消</div>
 			</div>
 		</div>
 		
@@ -102,8 +102,8 @@
 				datalist:{},
 				color:['#28C3F0','#8CAAFF','#249EFB','#33F392'],
 				chartSettings:{
-					radius: [50, 150],
-					offsetY: 250,
+					radius: [50, 100],
+					offsetY: 155,
 				},
 				 chartData: {
 				   columns: ['满意度', '人数'],
@@ -125,6 +125,7 @@
 				 let date= new Date(); 
 				 this.resetDate(date);
 				 this.getData();
+                  this.getOrderData();
 			  },
 			  dateSelect(){
 				  this.show=true;
@@ -133,7 +134,8 @@
 			  dateConfirm(val){
 				this.resetDate(val);
 				this.dateCancel();
-				this.getData();
+				this.getData();       //获取当前讲解员 评价统计
+                this.getOrderData();  //获取当前讲解员 预约统计
 			  },
 			  resetDate(val){
 				  let year = val.getFullYear()
@@ -191,7 +193,42 @@
 				  	vant.Toast('服务器发生错误');
 				    }
 				  });
-			  }
+			  }, //getData()
+
+
+        getOrderData(){
+            let url='{:url("api.guide/alysOrder")}';
+            let data={
+                username:'{$username}',
+                alystime:this.timeValue
+            }
+            const toast = vant.Toast.loading({
+                duration: 0, // 持续展示 toast
+                forbidClick: true,
+                message: '加载中...',
+            });
+            $.ajax({
+                type: 'get',
+                url: url,
+                data:data,
+                success: (res)=>{
+                //vant.Toast('提示');
+                if(res.code=='1'){
+                this.datalist=res.data;
+                $("#run").html(res.data.run);
+                $("#yes").html(res.data.yes);
+                $("#out").html(res.data.out);
+                $("#cos").html(res.data.cos);
+
+            }
+            //console.log(res)
+            toast.clear();
+            },error:(e)=>{
+              vant.Toast('服务器发生错误');
+            }
+            });
+        }  //getOrderData()
+
 		  }
 		})
 	</script>

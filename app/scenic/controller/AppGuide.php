@@ -55,10 +55,14 @@ class Appguide extends Controller
         }
         // 列表排序并显示
         $query->order('sort desc,id desc')->page(true, true, false, 0, $this->template);*/
-
+        $userInfo  = $this->app->session->get('user');
         $userName = $this->app->session->get('user.username');
+        $userNick = $this->app->session->get('user.nickname');
         $this->assign('username',$userName);
-        //echo 'username='.$userName;
+        $this->assign('nickname',$userNick);
+        $this->assign('user',$userInfo);
+        //echo 'user ='. json_encode($userInfo);exit;  //预约电话：0854—2781118
+
         $this->template = 'index';
         $this->fetch();
     }
@@ -106,10 +110,19 @@ class Appguide extends Controller
      * @throws \think\db\exception\ModelNotFoundException
      */
 	public function detailscode(){
+
+        $this->title = '评分详情';
+        $this->template = 'detailscode';
+
         $userName = $this->app->session->get('user.username');
-		$this->title = '评分详情';
-		$this->template = 'detailscode';
+        $userNick = $this->app->session->get('user.nickname');
+        $userHeadimg = $this->app->session->get('user.headimg');
+        $userDescribe = $this->app->session->get('user.describe');
+
         $this->assign('username',$userName);
+        $this->assign('nickname',$userNick);
+        $this->assign('headimg',$userHeadimg);
+        $this->assign('describe',$userDescribe);
 		$this->fetch();
 	}
 	
