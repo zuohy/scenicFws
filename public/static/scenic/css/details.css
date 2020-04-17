@@ -9,13 +9,13 @@
 	width:3.066rem;
 	height:3.066rem;
 	margin: 0 auto;
-	border-radius: 100%;
+	/*border-radius: 100%;*/
 	background: ghostwhite;
 }
 .header-img img{
 	width: 100%;
 	height: 100%;
-	border-radius: 100%;
+	/*border-radius: 100%;*/
 }
 .bakc{
 	width: 0.293rem;
