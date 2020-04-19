@@ -135,6 +135,7 @@ class Guide extends Controller
             //->field('username,level,nickname,score,headimg,contact_phone')
             ->where('guide_id','in',$nameAry)
             ->where('order_stat','in',$statAry)
+            ->order('sort desc,id desc')
             ->select();
 
         if ( $orderData ) {
@@ -313,7 +314,41 @@ class Guide extends Controller
         }
     }
     /////////////////////////分析函数 结束////////////////////////////////
+    /**
+     * 更新讲解员预约状态 提交
+     */
+    public function orderUpdateStat()
+    {
+        $paramAry = $this->request->post();
+        //讲解员预约ID
+        $orderId = isset($paramAry['id']) ? $paramAry['id'] : '';
 
+        //游客id
+        $visitId = isset($paramAry['visitid']) ? $paramAry['visitid'] : '';
+        if( empty($visitId) ){
+            $this->error('游客ID为空！');
+        }
+
+        //预约 更新状态
+        $orderStat = isset($paramAry['orderstat']) ? $paramAry['orderstat'] : '';
+        if( empty($orderStat) ){
+            $this->error('更新预约状态为空！');
+        }
+
+
+        $newData = [
+            'order_stat' => $orderStat,
+            ];
+        $ret = $this->app->db->name('ScenicOrder')
+            ->where(['id' => $orderId, 'visit_id' => $visitId])
+            ->update($newData);
+
+        if ( $ret ) {
+            $this->success('提交数据成功！',$ret);
+        } else {
+            $this->error('提交数据失败！');
+        }
+    }
 
     /**
      * 游客预约讲解员 提交
@@ -327,7 +362,7 @@ class Guide extends Controller
         //游客id
         $visitId = isset($paramAry['visitid']) ? $paramAry['visitid'] : '';
         if( empty($visitId) ){
-            $visitId = Str::random(3); //默认ID 随机生成
+            $visitId = Str::random(10,0,'order'); //默认ID 随机生成
         }
 
         //游客姓名

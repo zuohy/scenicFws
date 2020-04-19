@@ -19,9 +19,9 @@
 			</div>
 			<ul class="tab-list">
 				<li  @click="tab('0')" v-bind:class="{'active':tabindex=='0'}">全部预约</li>
-				<li @click="tab('1')" v-bind:class="{'active':tabindex=='1'}">已预约</li>
-				<li @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">已完成</li>
-				<li @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">已过期</li>
+				<li @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">已预约</li>
+				<li @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">已完成</li>
+				<li @click="tab('4')" v-bind:class="{'active':tabindex=='4'}">已过期</li>
 			</ul>
 			
 			<div class="list">
@@ -32,6 +32,10 @@
 								<span class="title">预约人</span>
 								<strong class="info">{{item.visit_name}}</strong>
 							</div>
+                            <div class="input-box">
+                                <span class="title">联系电话</span>
+                                <strong class="info">{{item.visit_phone}}</strong>
+                            </div>
 							<div class="input-box">
 								<span class="title">到访人数</span>
 								<strong class="info">{{item.visit_num}}人</strong>
@@ -40,12 +44,14 @@
 								<span class="title">到访时间</span>
 								<strong class="info">{{item.visit_t}}</strong>
 							</div>
-							<div class="input-box input-boxs" v-bind:class="{'input-box-active':item.order_stat=='3'||item.order_stat=='2'}" style="border-bottom: none;">
+							<div class="input-box input-boxs" v-bind:class="{'input-box-active':item.order_stat=='3'||item.order_stat=='4'||item.order_stat=='2'}" style="border-bottom: none;">
 								<span class="title">{{item.mark}}</span>
 								<strong class="info">
-									<div class="b1" v-if="item.order_stat=='2'">已完成</div>
-									<div class="b1" v-else-if="item.order_stat=='3'">已过期</div>
-									<div class="b1" v-else>确认服务</div>
+									<div class="b1" v-if="item.order_stat=='3'">已完成</div>
+									<div class="b1" v-else-if="item.order_stat=='4'">已过期</div>
+                                    <div class="b1" v-else-if="item.order_stat=='2'"  v-on:click="updateOrderStat(item.id, item.visit_id, 3)">已预约</div>
+                                    <div class="b1" v-else-if="item.order_stat=='5'">已取消</div>
+									<div class="b1" v-else v-on:click="updateOrderStat(item.id, item.visit_id, 2)">确认服务</div>
 								</strong>
 							</div>
 						</div> 
@@ -107,9 +113,36 @@
 								vant.Toast('网络发生错误');
 							  }
 							});
-						}
+						},  //getData
+                
+                //修改预约状态
+                updateOrderStat(id, visit_id, order_stat){
+                    $.ajax({
+                        type: 'POST',
+                        url: '{:url("api.guide/orderUpdateStat")}',
+                        data:{id: id, visitid: visit_id, orderstat: order_stat},
+                        success: (res)=>{
+                        //返回数据
+
+                        if(res.code=='1'){
+                        vant.Toast('更新成功');
+                        location.reload();
+                    }else{
+                        vant.Toast(res.info);
+                    }
+                },error:(e)=>{
+                    vant.Toast('网络发生错误！');
+                }
+                });
+                } //updateOrderStat
+
+
+
 					}
-				})	
+				})
+
+
+
 		</script>
 		
 	</body>

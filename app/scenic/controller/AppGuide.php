@@ -119,6 +119,8 @@ class Appguide extends Controller
         $userHeadimg = $this->app->session->get('user.headimg');
         $userDescribe = $this->app->session->get('user.describe');
 
+        //获取讲解员二维码
+
         $this->assign('username',$userName);
         $this->assign('nickname',$userNick);
         $this->assign('headimg',$userHeadimg);
