@@ -35,7 +35,41 @@
 				<img class="code" src="__ROOT__/static/scenic/img/code.png" >
 				<p class="code-msg">扫码获取评价详情</p>
 			</div>
-		</div> 
-	
+		</div>
+        <div class="narrator-info" style="margin-bottom:0.4rem;">
+            <div class="button" onclick="out()">
+                退出
+            </div>
+        </div>
 	</body>
 </html>
+
+<script src="__ROOT__/static/plugs/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    function out(){
+        $.ajax({
+            type: 'POST',
+            url: '{:url("applogin/out")}',
+            data:{username: '{$username}'},
+            success: (res)=>{
+            //返回数据
+
+        if(res.code=='1'){
+            vant.Toast('退出成功');
+            window.location.href = res.data;
+            //location.reload(res.data);
+        }else{
+            vant.Toast(res.info);
+        }
+        },error:(e)=>{
+        vant.Toast('网络发生错误！');
+        }
+        });
+    }
+
+</script>

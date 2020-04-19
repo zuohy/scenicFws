@@ -110,7 +110,7 @@ class Applogin extends Controller
     {
         $this->app->session->clear();
         $this->app->session->destroy();
-        $this->success('退出登录成功!', url('@admin/login')->build());
+        $this->success('退出登录成功!', url('@scenic/applogin')->build());
     }
 
 }
