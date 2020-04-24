@@ -47,9 +47,9 @@
 							<div class="input-box input-boxs" v-bind:class="{'input-box-active':item.order_stat=='3'||item.order_stat=='4'||item.order_stat=='2'}" style="border-bottom: none;">
 								<span class="title">{{item.mark}}</span>
 								<strong class="info">
-									<div class="b1" v-if="item.order_stat=='3'">已完成</div>
+									<div class="b1 actuve1" v-if="item.order_stat=='3'">已完成</div>
 									<div class="b1" v-else-if="item.order_stat=='4'">已过期</div>
-                                    <div class="b1" v-else-if="item.order_stat=='2'"  v-on:click="updateOrderStat(item.id, item.visit_id, 3)">已预约</div>
+                                    <div class="b1 actuve2" v-else-if="item.order_stat=='2'"  v-on:click="updateOrderStat(item.id, item.visit_id, 3)">已预约</div>
                                     <div class="b1" v-else-if="item.order_stat=='5'">已取消</div>
 									<div class="b1" v-else v-on:click="updateOrderStat(item.id, item.visit_id, 2)">确认服务</div>
 								</strong>

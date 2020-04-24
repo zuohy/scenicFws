@@ -185,3 +185,11 @@
 	border-radius:0.08rem;
 	color:rgba(151,151,152,1);
 } 
+.input-box-active .b1.actuve1{
+	border:2px solid #67C23A;
+	color:#67C23A;
+}
+.input-box-active .b1.actuve2{
+	border:2px solid #E6A23C;
+	color:#E6A23C;
+}

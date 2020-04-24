@@ -95,7 +95,7 @@ class Appguide extends Controller
     public function details()
     {
         $userName = $this->app->session->get('user.username');
-        $this->title = '预约详情';
+        $this->title = '评价详情';
         $this->template = 'details';
         $this->assign('username',$userName);
         $this->fetch();

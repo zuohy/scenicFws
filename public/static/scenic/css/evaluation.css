@@ -90,7 +90,7 @@ body{
 	position: absolute; 
 	right: 0.413rem;
 	top: 0.613rem;
-	padding:0.04rem 0.133rem;
+	padding:0.14rem 0.233rem;
 }
 .title{
 	font-size:0.426rem;
@@ -100,7 +100,8 @@ body{
 	overflow: hidden;
 	margin-bottom: 0.533rem;
 }
-.date{
+.date-infos{
+	/* min-width: 5.333rem; */
 	padding-left: 0.6rem;
 	float: right;
 	background: url(../img/date.png) no-repeat 0 0;

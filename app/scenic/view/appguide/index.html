@@ -9,14 +9,16 @@
     	[v-cloak] {
     	     display: none;
     	 }
-		 .date{
-			 width: 10rem;
+		 .date{ width: 10rem;}
+		 .evaluation-fz{
+			 height: auto;
 		 }
 		 .ve-ring-box{
 			 width: 100%;
 			 /* height:5.333rem; */
 			 padding-top:0.5rem;
-			 padding-bottom: 4rem;
+			 /* padding-bottom: 4rem; */
+			 /* background: red; */
 		 }
     </style>
 </head>
@@ -66,7 +68,7 @@
 				<div class="ve-ring-box">
 					<template>
 						<ve-ring :data="chartData" :settings="chartSettings" :colors="color"></ve-ring>
-					</template>
+					</template> 
 				</div>
 			</div>
 		</div>

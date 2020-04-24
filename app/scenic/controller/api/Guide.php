@@ -64,6 +64,7 @@ class Guide extends Controller
             ->find();
 
         if ($guideData) {
+            $guideData['headimg'] = $guideData['headimg'] == '' ? "/public/static/scenic/img/df_headimg.jpg" : $guideData['headimg']  ;
             $this->success('读取数据成功！',$guideData);
         } else {
             $this->error('没有数据！');
@@ -153,6 +154,11 @@ class Guide extends Controller
     {
         $paramAry = $this->request->get();
         $userName = isset($paramAry['username']) ? $paramAry['username'] : '';
+        $alysTime = isset($paramAry['create_at']) ? $paramAry['create_at'] : '';
+        if( $alysTime == '' ){
+            //查询所有时间
+            $alysTime = time();
+        }
         //username 参数支持多个，用逗号分隔
         $nameAry = explode(',',$userName);
 
@@ -171,6 +177,7 @@ class Guide extends Controller
         $orderData = $this->app->db->name('ScenicEstimate')
             //->field('username,level,nickname,score,headimg,contact_phone')
             ->where('guide_id','in',$nameAry)
+            ->where('create_at','<=',$alysTime)
             ->where('visit_estimate','in',$statAry)
             ->select();
 

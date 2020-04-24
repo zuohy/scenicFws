@@ -23,7 +23,7 @@
 			<li v-for="(item,index) in datalist" :key="item.id">
 				<div v-if='index==0'>
 					<h2 class="title">全部评论（{{index}}）
-						<div class="date">2020-04-05</div>
+						<div class="date-infos" @click="dateSelect">{{timeValue}}</div>
 					</h2>
 					<div class="tab-list">
 						<span  @click="tab('0')" v-bind:class="{'active':tabindex=='0'}">全部 {{count.fine}}</span>
@@ -49,7 +49,19 @@
 			</li>
 		</ul>
 		
+		
+			<template>
+				<van-popup v-model="show" position="bottom">
+					<div class="date">
+						<van-datetime-picker v-model="currentDate" @cancel="dateCancel" @confirm="dateConfirm" type="datetime"/>
+					</div>
+				</van-popup>
+			</template>
+		
 		</div>
+		
+		
+		
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
 		<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
@@ -59,6 +71,9 @@
 				el: '#app',
 				data(){
 					return{
+						show:false,
+						timeValue:"",
+						currentDate: new Date(),
 						count:{
 							fine:'111', //非常满意总数
 							satisfy:'1222',//满意
@@ -68,11 +83,6 @@
 						tabindex:0,//切换时需要的状态
 						datalist:[] //列表数据
 					}
-				},
-				created(){
-					//
-					//页面加载获取数据渲染数据
-					this.getData('0');
 				},
 				filters:{
 					stateText(state){
@@ -100,7 +110,43 @@
 					}
 					
 				},
+				created(){
+					//
+					//页面加载获取数据渲染数据
+					this.setDate();
+				},
 				methods:{
+					setDate(){
+						 let date= new Date(); 
+						 this.resetDate(date);
+						 this.getData('0');
+					},
+					resetDate(val){
+					  let year = val.getFullYear()
+					  let month = val.getMonth() + 1
+					  let day = val.getDate()
+					  let hour = val.getHours()
+					  let minute = val.getMinutes()
+					  if (month >= 1 && month <= 9) { month = `0${month}` }
+					  if (day >= 1 && day <= 9) { day = `0${day}` }
+					  if (hour >= 0 && hour <= 9) { hour = `0${hour}` }
+					  if (minute >= 0 && minute <= 9) { minute = `0${minute}` }
+					  this.timeValue = `${year}-${month}-${day} ${hour}:${minute}`
+					},
+					//选择后的时间
+					dateConfirm(val){
+						this.resetDate(val);
+						this.getData(this.tabindex);
+						this.dateCancel();
+					},
+					//选择时间
+					dateSelect(){
+						 this.show=true;
+					},
+					//关闭
+					dateCancel(){
+						this.show=false;
+					},
 					back(){
 						window.history.go(-1);
 					},
@@ -121,7 +167,7 @@
 						$.ajax({
 						  type: 'get',
 						  url: url,
-						  data:{estimate:tabindex,username:'{$username}'},
+						  data:{estimate:tabindex,create_at:this.timeValue,username:'{$username}'},
 						  success: (res)=>{
 							//返回数据
 							//console.log(res);

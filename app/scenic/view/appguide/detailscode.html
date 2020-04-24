@@ -9,8 +9,8 @@
 	<body style="background:#f1f1f1;">
 		<div class="header">
 			<div class="bakc">
-                <i class="bakck" @click="back"></i>
-				<img src="__ROOT__/static/scenic/img/tdetails/back1.png" >
+                <i class="bakck"></i>
+				<img onclick="bakc()" src="__ROOT__/static/scenic/img/tdetails/back1.png" >
 			</div>
 			<div class="header-img">
 				<img src="{$headimg}" >
@@ -46,11 +46,17 @@
 
 <script src="__ROOT__/static/plugs/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"/>
-<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+
+
 
 <script type="text/javascript" charset="utf-8">
+	
+	
+	
+	function bakc(){
+		window.history.go(-1); 
+	}
+	
     function out(){
         $.ajax({
             type: 'POST',
