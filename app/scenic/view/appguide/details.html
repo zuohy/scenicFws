@@ -22,11 +22,11 @@
 		<ul class="narrator-list">
 			<li v-for="(item,index) in datalist" :key="item.id">
 				<div v-if='index==0'>
-					<h2 class="title">全部评论（{{index}}）
+					<h2 class="title">全部评论（{{count.all}}）
 						<div class="date-infos" @click="dateSelect">{{timeValue}}</div>
 					</h2>
 					<div class="tab-list">
-						<span  @click="tab('0')" v-bind:class="{'active':tabindex=='0'}">全部 {{count.fine}}</span>
+						<span  @click="tab('0')" v-bind:class="{'active':tabindex=='0'}">全部 {{count.all}}</span>
 						<span @click="tab('1')" v-bind:class="{'active':tabindex=='1'}">不满意 {{count.fine}}</span>
 						<span @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">一般 {{count.satisfy}}</span>
 						<span @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">满意 {{count.kind}}</span>
@@ -35,9 +35,14 @@
 					<div class="button" style="top:2.666rem;">{{item.visit_estimate|stateText}}</div>
 				</div>
 				<div v-else class="button">{{item.visit_estimate|stateText}}</div>
-				
+
 				<div class="info">
-					<img :src="item.headerimg" >
+                    <div v-if='item.headerimg == ""'>
+					    <img :src="item.headerimg" >
+                    </div>
+                    <div v-else >
+                        <img src="__ROOT__/static/scenic/img/df_headimg.jpg" >
+                    </div>
 					<div class="info-name">
 						<p>{{item.visit_name}}</p>
 						<span>{{item.create_at}}</span>
@@ -75,10 +80,11 @@
 						timeValue:"",
 						currentDate: new Date(),
 						count:{
-							fine:'111', //非常满意总数
-							satisfy:'1222',//满意
-							kind:'10',//一般
-							poor:'11' //差
+                            all:'11', //非常满意总数
+							fine:'1', //非常满意
+							satisfy:'2',//满意
+							kind:'3',//一般
+							poor:'4' //差
 						},//统计
 						tabindex:0,//切换时需要的状态
 						datalist:[] //列表数据
@@ -120,6 +126,7 @@
 						 let date= new Date(); 
 						 this.resetDate(date);
 						 this.getData('0');
+                        this.getCount('0');
 					},
 					resetDate(val){
 					  let year = val.getFullYear()
@@ -137,6 +144,7 @@
 					dateConfirm(val){
 						this.resetDate(val);
 						this.getData(this.tabindex);
+                        this.getCount(this.tabindex);
 						this.dateCancel();
 					},
 					//选择时间
@@ -154,6 +162,7 @@
 					tab(index){
 						this.tabindex=index;
 						this.getData(index);
+                        this.getCount(index);
 					},
 					//获取数据
 					getData(tabindex){ //tabindex挡墙状态
@@ -173,13 +182,6 @@
 							//console.log(res);
 							if(res.code=='1'){
 								this.datalist=res.data;
-								//获取总数
-								this.count={
-									fine:'111', //非常满意总数
-									satisfy:'1222',//满意
-									kind:'10',//一般
-									poor:'11' //差
-								}
 							}
 							//模拟数据格式
 							toast.clear();
@@ -187,7 +189,44 @@
 							 vant.Toast('网络发生错误');
 						  }
 						});
-					}
+					}, //getData()
+
+            //获取评论状态数量
+            getCount(tabindex){ //tabindex挡墙状态
+                //获取数据
+                let url='{:url("api.guide/alysEstimate")}'
+                const toast = vant.Toast.loading({
+                    duration: 0, // 持续展示 toast
+                    forbidClick: true,
+                    message: '加载中...',
+                });
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    data:{alystime:this.timeValue,username:'{$username}'},
+                    success: (res)=>{
+                    //返回数据
+                    //console.log(res);
+                    if(res.code=='1'){
+                    var cAll = res.data.okb + res.data.oka + res.data.nol + res.data.unk;
+                    //获取总数
+                    this.count={
+                        all:cAll, //非常满意总数
+                        fine: res.data.okb, //非常满意总数
+                        satisfy:res.data.oka,//满意
+                        kind:res.data.nol,//一般
+                        poor: res.data.unk //差
+                    }
+                }
+                //模拟数据格式
+                toast.clear();
+            },error:(e)=>{
+                vant.Toast('网络发生错误');
+            }
+            });
+            } //getCount
+
+
 				}
 			})	
 		</script>
