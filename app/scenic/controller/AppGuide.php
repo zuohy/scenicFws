@@ -119,12 +119,18 @@ class Appguide extends Controller
         $userHeadimg = $this->app->session->get('user.headimg');
         $userDescribe = $this->app->session->get('user.describe');
 
+
         //获取讲解员二维码
+        $map = ['username' => $userName, 'is_deleted' => '0'];
+        //检查 讲解员
+        $guideUser = $this->app->db->name('ScenicGuide')->where($map)->order('id desc')->find();
+        $userCodeUrl = $guideUser['evaluate_url'];
 
         $this->assign('username',$userName);
         $this->assign('nickname',$userNick);
         $this->assign('headimg',$userHeadimg);
         $this->assign('describe',$userDescribe);
+        $this->assign('codeurl',$userCodeUrl);
 		$this->fetch();
 	}
 	

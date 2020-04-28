@@ -188,6 +188,7 @@ class User extends Controller
         $contactPhone = isset($userData['contact_phone']) ? $userData['contact_phone'] : '';
         $contactQQ = isset($userData['contact_qq']) ? $userData['contact_qq'] : '';
         $contactMail = isset($userData['contact_mail']) ? $userData['contact_mail'] : '';
+        $describe = isset($userData['describe']) ? $userData['describe'] : '';
 
         $where = ['username'=>$userName];
         $guideData = $this->app->db->name('ScenicGuide')->where($where)->find(); //var_dump($guideData);
@@ -201,7 +202,8 @@ class User extends Controller
         $newData = ['username' => $userName, 'nickname' => $nickName, 'headimg' => $headImg,
             'contact_phone' => $contactPhone,
             'contact_qq' => $contactQQ,
-            'contact_mail' => $contactMail];
+            'contact_mail' => $contactMail,
+            'describe' => $describe];
         $ret = $this->app->db->name('ScenicGuide')->insert($newData);
 
         if( $ret == '1'){
