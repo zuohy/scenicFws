@@ -27,10 +27,10 @@
 					</h2>
 					<div class="tab-list">
 						<span  @click="tab('0')" v-bind:class="{'active':tabindex=='0'}">全部 {{count.all}}</span>
-						<span @click="tab('1')" v-bind:class="{'active':tabindex=='1'}">不满意 {{count.fine}}</span>
-						<span @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">一般 {{count.satisfy}}</span>
-						<span @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">满意 {{count.kind}}</span>
-						<span @click="tab('4')" v-bind:class="{'active':tabindex=='4'}">非常满意 {{count.poor}}</span>
+						<span @click="tab('1')" v-bind:class="{'active':tabindex=='1'}">不满意 {{count.poor}}</span>
+						<span @click="tab('2')" v-bind:class="{'active':tabindex=='2'}">一般 {{count.kind}}</span>
+						<span @click="tab('3')" v-bind:class="{'active':tabindex=='3'}">满意 {{count.satisfy}}</span>
+						<span @click="tab('4')" v-bind:class="{'active':tabindex=='4'}">非常满意 {{count.fine}}</span>
 					</div>
 					<div class="button" style="top:2.666rem;">{{item.visit_estimate|stateText}}</div>
 				</div>

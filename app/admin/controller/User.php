@@ -184,6 +184,11 @@ class User extends Controller
         //查询讲解员信息表是否已经存在相同的username
         $userName = isset($userData['username']) ? $userData['username'] : ''; //echo ' name=' . $userName;
         $nickName = isset($userData['nickname']) ? $userData['nickname'] : '';
+        $headImg = isset($userData['headimg']) ? $userData['headimg'] : '';
+        $contactPhone = isset($userData['contact_phone']) ? $userData['contact_phone'] : '';
+        $contactQQ = isset($userData['contact_qq']) ? $userData['contact_qq'] : '';
+        $contactMail = isset($userData['contact_mail']) ? $userData['contact_mail'] : '';
+
         $where = ['username'=>$userName];
         $guideData = $this->app->db->name('ScenicGuide')->where($where)->find(); //var_dump($guideData);
         if( !empty($guideData) ){
@@ -193,7 +198,10 @@ class User extends Controller
         }
 
         //新增讲解员基础信息
-        $newData = ['username' => $userName, 'nickname' => $nickName];
+        $newData = ['username' => $userName, 'nickname' => $nickName, 'headimg' => $headImg,
+            'contact_phone' => $contactPhone,
+            'contact_qq' => $contactQQ,
+            'contact_mail' => $contactMail];
         $ret = $this->app->db->name('ScenicGuide')->insert($newData);
 
         if( $ret == '1'){
