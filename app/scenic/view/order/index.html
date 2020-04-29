@@ -56,12 +56,8 @@
                 </td>
                 <td class='text-left nowrap'>
 
-                    {if auth("edit")}
-                    <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑资料" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
-                    {/if}
-
                     {if auth("state") and $vo.order_stat eq 1}
-                    <a class="layui-btn layui-btn-sm layui-btn-warm" data-confirm="确定要禁用该禁用账号吗?" data-action="{:url('state')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('state')}">禁 用</a>
+                    <!--<a class="layui-btn layui-btn-sm layui-btn-warm" data-confirm="确定要禁用该禁用账号吗?" data-action="{:url('state')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('state')}">禁 用</a>-->
                     {/if}
 
                 </td>
